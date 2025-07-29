@@ -1,0 +1,80 @@
+@use "vars";
+
+
+$bp-super-small: 320px;
+$bp-small-medium: 414px;
+$bp-small: 600px;
+$bp-medium: 900px;
+$bp-medium-big: 1100px;
+$bp-big: 1366px;
+$bp-super-big: 1920px;
+
+@mixin bp($from, $to: false) {
+  @if $to {
+    @media (min-width: #{$from}) and (max-width: #{$to - 1}) {
+      @content;
+    }
+  } @else {
+    @media (min-width: #{$from}) {
+      @content;
+    }
+  }
+}
+
+
+@mixin layoutHorizontal() {
+  padding-left: 15px;
+  padding-right: 15px;
+
+  @include bp($bp-small) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @include bp($bp-medium) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  @include bp($bp-medium-big) {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  @include bp($bp-big) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  @include bp($bp-super-big) {
+    padding-left: 146px;
+    padding-right: 146px;
+  }
+}
+
+
+@mixin layoutHorizontalScroller() {
+  padding-left: 15px;
+
+  @include bp($bp-small) {
+    padding-left: 20px;
+  }
+
+  @include bp($bp-medium) {
+    padding-left: 32px;
+  }
+
+  @include bp($bp-medium-big) {
+    padding-left: 50px;
+  }
+
+  @include bp($bp-big) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  @include bp($bp-super-big) {
+    padding-left: 146px;
+    padding-right: 146px;
+  }
+}

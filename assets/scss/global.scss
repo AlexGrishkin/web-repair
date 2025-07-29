@@ -1,0 +1,37 @@
+@use "vars";
+@use "mixins";
+@use "typography";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Manrope, sans-serif;
+  color: $primary;
+}
+
+html, body {
+  width: 100%;
+  font-size: 10px;
+}
+
+body.bg-events {
+ background-color: $darkWhite;
+}
+
+body.priests {
+  background-image: url('public/overlay.png');
+}
+
+input, textarea, select {
+  outline: none;
+}
+
+input, textarea, select, button {
+  background: transparent;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+}

@@ -1,0 +1,119 @@
+@mixin textMini() {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+@mixin textMiniSemiBold() {
+  font-weight: 600;
+  @include textMini
+}
+
+@mixin textMiniBold() {
+  font-weight: 800;
+  @include textMini
+}
+
+@mixin textMedium() {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+@mixin textMediumSemiBold() {
+  font-weight: 600;
+  @include textMedium
+}
+
+@mixin textMediumBold() {
+  font-weight: 800;
+  @include textMedium
+}
+
+@mixin textMediumBig() {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+@mixin textMediumBigSemiBold() {
+  font-weight: 600;
+  @include textMediumBig
+}
+
+@mixin textMediumBigBold() {
+  font-weight: 800;
+  @include textMediumBig
+}
+
+@mixin textBig() {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+@mixin textBigSemiBold() {
+  font-weight: 600;
+  @include textBig
+}
+
+@mixin textBigBold() {
+  font-weight: 800;
+  @include textBig
+}
+
+@mixin textSuperBig() {
+  font-size: 36px;
+  line-height: 42px;
+}
+
+@mixin textSuperBigBold() {
+  font-weight: 800;
+ @include textSuperBig
+}
+
+@mixin textSuperBigSmall() {
+  font-size: 32px;
+  line-height: 38px;
+}
+
+@mixin textSuperBigSmallBold() {
+  font-weight: 800;
+  @include textSuperBigSmall
+}
+
+@mixin textSuperBigLarge() {
+  font-size: 42px;
+  line-height: 48px;
+}
+
+@mixin textSuperBigLargeSemiBold() {
+  font-weight: 600;
+  @include textSuperBigLarge
+}
+
+@mixin textSuperBigLargeBold() {
+  font-weight: 800;
+  @include textSuperBigLarge
+}
+
+@mixin textSuperBigMedium() {
+  font-size: 50px;
+  line-height: 62px;
+}
+
+@mixin textSuperBigMediumSemiBold() {
+  font-weight: 600;
+  @include textSuperBigMedium
+}
+
+
+@mixin textSuperBigXL() {
+  font-size: 64px;
+  line-height: 72px;
+}
+
+@mixin textSuperBigXLSemiBold() {
+  font-weight: 600;
+  @include textSuperBigXL
+}
+
+
+
+
