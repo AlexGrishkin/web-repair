@@ -42,6 +42,8 @@ export default defineNuxtConfig({
     { name: 'geist', provider: 'google' },
     { name: 'manrope', provider: 'google' },
     { name: 'Roboto Slab', provider: 'google' },
+    { name: 'Prosto One', provider: 'google' },
+    { name: 'Nunito', provider: 'google' },
   ],
   css: ['~/assets/scss/global.scss'],
   vite: {

@@ -1,20 +1,26 @@
 <template>
   <div :class="$style.headerWrapper">
     <nuxt-link :class="$style.logoWrapper" to="/">
-      <nuxt-img v-if="data.logo" :class="$style.logoImg" :src="data.logo" />
-      <p :class="$style.organisationName">{{ organisationName }}</p>
+      <img v-if="data.logo" :class="$style.logoImg" :src="data.logo" alt="Логотип">
     </nuxt-link>
 
-    <div :class="$style.navigationWrapper">
-      <nuxt-link
+    <nav :class="$style.navigationWrapper">
+      <component
+        :is="isLink(link)"
         v-for="link in NAVIGATION_CONFIG"
         :key="link.id"
         :class="$style.navigationLink"
         :to="link.to"
+        href="#"
         data-allow-mismatch
       >
         {{ link.title }}
-      </nuxt-link>
+      </component>
+    </nav>
+
+    <div :class="$style.contactsWrapper">
+      <p :class="$style.phone">+7 (343) 311-03-16</p>
+      <p :class="$style.timeWork">ежедневно с 9:00 до 21:00</p>
     </div>
 
     <!-- Burger Icon -->
@@ -25,7 +31,7 @@
     </button>
 
     <div v-show="true" :class="[$style.mobileMenu, isMobileMenuOpen ? $style.open : $style.closed]">
-      <img :class="$style.decorImage" src="/decorateImg.svg" alt="Декоративная картинка" />
+      <img v-if="data.logo" :class="$style.mobileLogoImg" :src="data.logo" alt="Логотип">
       <nuxt-link
         v-for="link in NAVIGATION_CONFIG"
         :key="link.id"
@@ -41,36 +47,36 @@
 
 <script setup lang="ts">
 const data = {
-  logo: '/logo.png',
-  name: 'Свято-Никольский храм на Красной слободе',
+  logo: '/logo.webp',
 };
 
 const NAVIGATION_CONFIG = [
   {
-    to: '/about',
-    title: 'О\u00A0храме',
+    title: 'Тарифы',
     id: '1',
   },
   {
-    to: '/events',
-    title: 'Расписание богослужений',
+    title: 'Портфолио',
     id: '2',
   },
   {
-    to: '/news',
-    title: 'Новости',
+    to: 'priemka',
+    title: 'Приемка квартир',
     id: '3',
   },
   {
-    to: '/priests',
-    title: 'Служители',
+    title: 'Контакты',
     id: '4',
   },
 ];
 
-const organisationName = computed(() => {
-  return data.name && data.name.length ? data.name : 'Свято-Никольский храм на Красной слободе';
-});
+const isLink = (nav) => {
+  if(nav?.to) {
+    return defineNuxtLink({})
+  } else {
+    return 'a'
+  }
+}
 
 const isMobileMenuOpen = ref(false);
 
@@ -81,16 +87,15 @@ const toggleMobileMenu = () => {
 
 <style module scoped lang="scss">
 .headerWrapper {
-  position: sticky;
-  display: flex;
-  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 4rem;
   align-items: center;
   z-index: 10;
-  background-color: $white;
+  background-color: $headerColor;
   top: 0;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid $grey;
   @include layoutHorizontal;
 }
 
@@ -101,19 +106,14 @@ const toggleMobileMenu = () => {
   gap: 1.6rem;
 
   .logoImg {
-    width: 5rem;
-    height: 5rem;
+    height: 100%;
     object-fit: contain;
   }
 }
 
-.organisationName {
-  max-width: 22.8rem;
-  color: $darkRed;
-  @include textMediumBigBold;
-}
-
 .navigationWrapper {
+  padding-top: 20px;
+  padding-bottom: 20px;
   display: none;
   gap: 3rem;
 
@@ -122,7 +122,7 @@ const toggleMobileMenu = () => {
   }
 
   .navigationLink {
-    color: $black-blue;
+    color: $darkWhite;
     width: min-content;
     text-wrap: balance;
     @include textMediumBigSemiBold;
@@ -132,7 +132,7 @@ const toggleMobileMenu = () => {
     }
 
     &:hover {
-      color: $darkRed;
+      color: $darkOrange;
     }
   }
 }
@@ -148,7 +148,7 @@ const toggleMobileMenu = () => {
   span {
     width: 25px;
     height: 3px;
-    background-color: $black-blue;
+    background-color: $darkWhite;
   }
 
   @include bp($bp-medium) {
@@ -156,13 +156,45 @@ const toggleMobileMenu = () => {
   }
 }
 
+.contactsWrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  justify-self: end;
+
+  @include bp($bp-medium) {
+    justify-self: start;
+  }
+
+  .phone {
+    font-family: Prosto One, serif;
+    color: $darkWhite;
+    @include textSuperMini;
+
+    @include bp($bp-medium) {
+      @include textMedium;
+    }
+
+    @include bp($bp-super-big) {
+      @include textMediumBigLarge;
+    }
+  }
+
+  .timeWork {
+    font-family: Nunito, serif;
+    color: $darkWhite;
+    @include textSuperMini;
+  }
+}
+
 .mobileMenu {
   position: fixed;
-  top: 91px;
+  top: 72px;
   right: 0;
-  height: 40vh;
+  height: 100vh;
   width: 100%;
-  background-color: $white;
+  background-color: $seaGreen;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   display: flex;
@@ -175,19 +207,26 @@ const toggleMobileMenu = () => {
   @include bp($bp-small) {
     max-width: 41.4rem;
   }
-
-  .mobileLink {
-    color: $black-blue;
-    @include textMediumBigSemiBold;
-
-    &:hover {
-      color: $darkRed;
-    }
-  }
-
   @include bp($bp-medium) {
     display: none;
   }
+
+  .mobileLink {
+    color: $darkWhite;
+    @include textMediumBigSemiBold;
+
+    &:hover {
+      color: $darkOrange;
+    }
+  }
+
+  .mobileLogoImg {
+    object-fit: contain;
+    width: 8.8rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
 }
 
 .open {
@@ -196,12 +235,5 @@ const toggleMobileMenu = () => {
 
 .closed {
   transform: translateX(100%);
-}
-
-.decorImage {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 25.4rem;
-  height: 3.6rem;
 }
 </style>
