@@ -33,6 +33,7 @@ defineProps({
   position: relative;
   width: 100%;
   overflow: hidden;
+  height: 100vh;
 
   &::after {
     content: '';
@@ -49,7 +50,7 @@ defineProps({
   .mainBannerImg {
     object-fit: cover;
     width: 100%;
-    height: 100vh;
+    height: 100%;
   }
 
   .mainBannerText {
