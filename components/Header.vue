@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.headerWrapper">
     <nuxt-link :class="$style.logoWrapper" to="/">
-      <img v-if="data.logo" :class="$style.logoImg" :src="data.logo" alt="Логотип">
+      <img v-if="data.logo" :class="$style.logoImg" :src="data.logo" alt="Логотип" />
     </nuxt-link>
 
     <nav :class="$style.navigationWrapper">
@@ -31,7 +31,7 @@
     </button>
 
     <div v-show="true" :class="[$style.mobileMenu, isMobileMenuOpen ? $style.open : $style.closed]">
-      <img v-if="data.logo" :class="$style.mobileLogoImg" :src="data.logo" alt="Логотип">
+      <img v-if="data.logo" :class="$style.mobileLogoImg" :src="data.logo" alt="Логотип" />
       <nuxt-link
         v-for="link in NAVIGATION_CONFIG"
         :key="link.id"
@@ -60,23 +60,18 @@ const NAVIGATION_CONFIG = [
     id: '2',
   },
   {
-    to: 'priemka',
-    title: 'Приемка квартир',
-    id: '3',
-  },
-  {
     title: 'Контакты',
-    id: '4',
+    id: '3',
   },
 ];
 
 const isLink = (nav) => {
-  if(nav?.to) {
-    return defineNuxtLink({})
+  if (nav?.to) {
+    return defineNuxtLink({});
   } else {
-    return 'a'
+    return 'a';
   }
-}
+};
 
 const isMobileMenuOpen = ref(false);
 
@@ -95,6 +90,7 @@ const toggleMobileMenu = () => {
   align-items: center;
   z-index: 10;
   background-color: $headerColor;
+  backdrop-filter: blur(15px);
   top: 0;
   @include layoutHorizontal;
 }
@@ -125,6 +121,7 @@ const toggleMobileMenu = () => {
     color: $darkWhite;
     width: min-content;
     text-wrap: balance;
+    transition: $transitionColor;
     @include textMediumBigSemiBold;
 
     @include bp($bp-medium-big) {
@@ -168,7 +165,7 @@ const toggleMobileMenu = () => {
   }
 
   .phone {
-    font-family: Prosto One, serif;
+    font-family: $headers;
     color: $darkWhite;
     @include textSuperMini;
 
@@ -182,7 +179,6 @@ const toggleMobileMenu = () => {
   }
 
   .timeWork {
-    font-family: Nunito, serif;
     color: $darkWhite;
     @include textSuperMini;
   }
@@ -226,7 +222,6 @@ const toggleMobileMenu = () => {
     margin-left: auto;
     margin-right: auto;
   }
-
 }
 
 .open {

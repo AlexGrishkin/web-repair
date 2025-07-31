@@ -69,6 +69,11 @@
   @include textBig
 }
 
+@mixin textBigXL() {
+  font-size: 28px;
+  line-height: 30px;
+}
+
 @mixin textSuperBig() {
   font-size: 36px;
   line-height: 42px;
@@ -123,6 +128,16 @@
 @mixin textSuperBigXLSemiBold() {
   font-weight: 600;
   @include textSuperBigXL
+}
+
+@mixin textSuperBigXXL() {
+  font-size: 70px;
+  line-height: 72px;
+}
+
+@mixin textSuperBigXXXL() {
+  font-size: 80px;
+  line-height: 80px;
 }
 
 

@@ -3,15 +3,19 @@
     <nuxt-img src="/Banner.webp" :class="$style.mainBannerImg" alt="Фото церкви" />
     <div :class="$style.mainBannerText">
       <p :class="$style.mainText">Ремонт «под ключ»</p>
-      <p :class="$style.guarantee">за 20 дней
-        с гарантией 5 лет</p>
+      <p :class="$style.guarantee">
+        за 20 дней <br />
+        с гарантией 5 лет
+      </p>
       <p :class="$style.goodPrices">по самым приятным ценам в городе</p>
+      <BaseButton type="banner" text="Выбрать тариф" :class="$style.bannerButton" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from 'vue';
+import BaseButton from '~/components/UI/BaseButton.vue';
 
 interface BannerProps {
   photoUrl: string;
@@ -34,6 +38,7 @@ defineProps({
   width: 100%;
   overflow: hidden;
   height: 100vh;
+  z-index: 1;
 
   &::after {
     content: '';
@@ -68,45 +73,45 @@ defineProps({
     }
   }
 
-  .mainText{
-    font-family: "Prosto One", serif;
+  .mainText {
+    font-family: $headers;
     color: $darkWhite;
     text-transform: uppercase;
     z-index: 2;
     margin-bottom: 4rem;
-    @include textBigSemiBold;
+    @include textSuperBigSmall;
 
     @include bp($bp-medium) {
-      @include textSuperBigLargeSemiBold;
+      @include textSuperBigMedium;
     }
 
     @include bp($bp-medium-big) {
       text-wrap: balance;
-      @include textSuperBigMediumSemiBold;
+      @include textSuperBigXXL;
     }
 
     @include bp($bp-super-big) {
-      @include textSuperBigXLSemiBold;
+      @include textSuperBigXXXL;
     }
   }
 
   .guarantee {
     z-index: 2;
-    font-family: "Prosto One", serif;
+    font-family: $headers;
     color: $darkWhite;
     margin-bottom: 1.6rem;
-    @include textMediumSemiBold;
+    @include textBig;
 
-    @include bp($bp-medium) {
-      @include textBigSemiBold;
+    @include bp($bp-small) {
+      @include textBigXL;
     }
 
-    @include bp($bp-medium-big) {
-      @include textSuperBigSmallBold;
+    @include bp($bp-medium) {
+      @include textSuperBigSmall;
     }
 
     @include bp($bp-big) {
-      @include textSuperBigBold;
+      @include textSuperBigLarge;
     }
   }
 
@@ -117,6 +122,15 @@ defineProps({
 
     @include bp($bp-super-big) {
       @include textMediumBigLarge;
+    }
+  }
+
+  .bannerButton {
+    margin-top: 4.8rem;
+    max-width: 15.7rem;
+
+    @include bp($bp-small) {
+      max-width: 24rem;
     }
   }
 }

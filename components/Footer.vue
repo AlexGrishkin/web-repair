@@ -1,17 +1,15 @@
 <template>
   <div :class="$style.footerWrapper">
-    <img :class="$style.decorImage" src="/decorateImg.svg" alt="Декоративная картинка" />
     <div :class="$style.footerContentWrapper">
       <div :class="$style.footerData">
-        <p v-if="aboutData?.name" :class="$style.organisationName">© {{ aboutData?.name }}</p>
+        <nuxt-link :class="$style.logoWrapper" to="/">
+          <img v-if="data.logo" :class="$style.logoImg" :src="data.logo" alt="Логотип" />
+        </nuxt-link>
         <div :class="$style.contactsWrapper">
-          <p v-if="aboutData?.address" :class="$style.aboutContactsAdress">
-            {{ aboutData?.address }}
-          </p>
-          <p v-if="aboutData?.phone" :class="$style.aboutContactsPhone">
-            Телефон: {{ aboutData?.phone }}
-          </p>
-          <p v-if="aboutData?.email" :class="$style.aboutContactsEmail">{{ aboutData?.email }}</p>
+          <p :class="$style.phone">+7 (343) 311-03-16</p>
+          <p :class="$style.timeWork">ежедневно с 9:00 до 21:00</p>
+          <p :class="$style.city">г.Тверь</p>
+          <p :class="$style.timeWork">ул. Ленина, д. 4</p>
         </div>
         <div :class="$style.socialLinksWrapper">
           <a href="https://vk.com/svnikolakr" target="_blank">
@@ -23,10 +21,7 @@
         </div>
       </div>
       <div :class="$style.developersInfo">
-        <a href="https://t.me/tehvo_slava" target="_blank" :class="$style.developersLogo">
-          <img src="/social/ourLogo.png" />
-        </a>
-        <p :class="$style.developersName">Разработано Технологии во Славу</p>
+        <p :class="$style.developersName">Разработано @Alex Grishkin</p>
       </div>
     </div>
   </div>
@@ -45,6 +40,10 @@ interface AboutProps {
   description: string;
 }
 
+const data = {
+  logo: '/logo.webp',
+};
+
 const aboutData = ref<AboutProps | null>(null);
 
 onMounted(async () => {
@@ -59,27 +58,14 @@ onMounted(async () => {
 
 <style module scoped lang="scss">
 .footerWrapper {
+  position: relative;
   display: grid;
   gap: 2rem;
   z-index: 10;
-  background-color: $white;
   padding-top: 3rem;
   padding-bottom: 3rem;
-  border-top: 1px solid $grey;
+  border-top: 2px dashed $darkWhite;
   @include layoutHorizontal;
-}
-
-.logoWrapper {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  gap: 1.6rem;
-
-  .logoImg {
-    width: 5rem;
-    height: 5rem;
-    object-fit: contain;
-  }
 }
 
 .footerContentWrapper {
@@ -123,59 +109,6 @@ onMounted(async () => {
   }
 }
 
-.organisationName {
-  grid-area: name;
-  color: $darkRed;
-
-  @include textMiniSemiBold;
-
-  @include bp($bp-medium) {
-    @include textMediumSemiBold;
-  }
-}
-
-.aboutContactsAdress {
-  @include textMiniSemiBold;
-
-  @include bp($bp-medium) {
-    @include textMediumSemiBold;
-  }
-}
-
-.aboutContactsPhone {
-  color: $darkGrey;
-  @include textMini;
-
-  @include bp($bp-medium) {
-    @include textMedium;
-  }
-}
-
-.aboutContactsEmail {
-  color: $darkGrey;
-  @include textMini;
-
-  @include bp($bp-medium) {
-    @include textMedium;
-  }
-}
-
-.navigationWrapper {
-  display: flex;
-  gap: 4.7rem;
-
-  .navigationLink {
-    color: $black-blue;
-    width: min-content;
-    text-wrap: nowrap;
-    @include textMediumBigSemiBold;
-
-    &:hover {
-      color: $darkRed;
-    }
-  }
-}
-
 .decorImage {
   justify-self: center;
   max-width: 25.4rem;
@@ -201,12 +134,58 @@ onMounted(async () => {
 
   .developersName {
     grid-area: devname;
-    color: $darkRed;
+    color: $darkWhite;
     @include textMiniSemiBold;
 
     @include bp($bp-medium) {
       @include textMediumSemiBold;
     }
+  }
+}
+
+.logoWrapper {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  gap: 1.6rem;
+
+  .logoImg {
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.contactsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-self: end;
+
+  @include bp($bp-medium) {
+    justify-self: start;
+  }
+
+  .phone {
+    font-family: $headers;
+    color: $darkWhite;
+    @include textSuperMini;
+
+    @include bp($bp-medium) {
+      @include textMedium;
+    }
+
+    @include bp($bp-super-big) {
+      @include textMediumBigLarge;
+    }
+  }
+
+  .timeWork {
+    color: $darkWhite;
+    @include textMediumBigSemiBold;
+  }
+
+  .city {
+    color: $darkOrange;
+    @include textMediumBigSemiBold;
   }
 }
 </style>
