@@ -1,7 +1,7 @@
 <template>
   <div :class="[$style.cardWrapper, { [$style.cardWrapperEven]: !!(position % 2) }]">
     <p :class="$style.quantity">>{{ quantity }}</p>
-    <hr :class="$style.line" />
+    <hr :class="[$style.line, { [$style.lineEven]: !!(position % 2) }]" />
     <p :class="$style.text">{{ text }}</p>
   </div>
 </template>
@@ -40,11 +40,16 @@ defineProps({
 }
 
 .quantity {
+  font-family: $headers;
   color: inherit;
   @include textSuperBigXL;
 }
 .line {
-  border: 1px solid inherit;
+  border: 1px solid $darkOrange;
+}
+
+.lineEven {
+  border: 1px solid $darkWhite;
 }
 
 .text {
