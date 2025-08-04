@@ -45,6 +45,32 @@ const data = [
   @include layoutHorizontal;
 }
 
+.about::before {
+  content: '';
+  top: 0;
+  left: 0;
+  z-index: -2;
+  position: absolute;
+  background-image: linear-gradient(180deg, #2c2d30 0%, $darkWhite 68.27%);
+  background-clip: padding-box;
+  width: 100%;
+  height: calc(100% + 4px);
+}
+
+.about::after {
+  content: '';
+  top: -45px;
+  left: 0;
+  z-index: -1;
+  position: absolute;
+  background-image: url('/gradient.webp');
+  background-clip: padding-box;
+  background-size: 100% 100%;
+  background-position: center;
+  width: 100%;
+  height: 125%;
+}
+
 .mainText {
   font-family: $headers;
   color: $darkWhite;
@@ -86,11 +112,15 @@ const data = [
 
 .cardsWrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 13.3rem);
+  grid-template-columns: repeat(2, 13.3rem);
   flex-wrap: wrap;
   gap: 0.8rem;
   justify-content: center;
   margin-top: 62px;
+
+  @include bp($bp-small) {
+    grid-template-columns: repeat(auto-fit, 13rem);
+  }
 
   @include bp($bp-medium) {
     grid-template-columns: repeat(auto-fit, 18.9rem);
@@ -99,7 +129,7 @@ const data = [
 
   @include bp($bp-medium-big) {
     grid-template-columns: repeat(auto-fit, 22.3rem);
-    gap: 4rem;
+    gap: 3rem;
   }
 
   @include bp($bp-super-big) {
