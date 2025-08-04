@@ -31,7 +31,8 @@
     </button>
 
     <div v-show="true" :class="[$style.mobileMenu, isMobileMenuOpen ? $style.open : $style.closed]">
-      <img v-if="data.logo" :class="$style.mobileLogoImg" :src="data.logo" alt="Логотип" />
+      <ButtonClose :class="$style.buttonClose" @click="handleClose" />
+      <img v-if="data.logo" :class="$style.mobileLogoImg" src="/BigLogo.png" alt="Логотип" />
       <nuxt-link
         v-for="link in NAVIGATION_CONFIG"
         :key="link.id"
@@ -46,6 +47,8 @@
 </template>
 
 <script setup lang="ts">
+import ButtonClose from '~/components/UI/ButtonClose.vue';
+
 const data = {
   logo: '/logo.webp',
 };
@@ -74,6 +77,10 @@ const isLink = (nav) => {
 };
 
 const isMobileMenuOpen = ref(false);
+
+const handleClose = () => {
+  isMobileMenuOpen.value = false;
+};
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
@@ -186,11 +193,11 @@ const toggleMobileMenu = () => {
 
 .mobileMenu {
   position: fixed;
-  top: 72px;
+  top: 0;
   right: 0;
   height: 100vh;
-  width: 100%;
-  background-color: $seaGreen;
+  width: 28.4rem;
+  background-color: $mainBlack;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   display: flex;
@@ -200,9 +207,6 @@ const toggleMobileMenu = () => {
   transition: transform 0.3s ease-in-out;
   z-index: 99;
 
-  @include bp($bp-small) {
-    max-width: 41.4rem;
-  }
   @include bp($bp-medium) {
     display: none;
   }
@@ -218,10 +222,15 @@ const toggleMobileMenu = () => {
 
   .mobileLogoImg {
     object-fit: contain;
-    width: 8.8rem;
+    width: 16.6rem;
+    height: 13.3rem;
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+.buttonClose {
+  margin-left: auto;
 }
 
 .open {

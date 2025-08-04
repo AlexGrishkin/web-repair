@@ -35,13 +35,12 @@ const data = [
   { quantity: 900, text: 'проектов в работе одновременно', id: 2 },
   { quantity: 900, text: 'проектов в работе одновременно', id: 3 },
   { quantity: 900, text: 'проектов в работе одновременно', id: 4 },
-  { quantity: 900, text: 'проектов в работе одновременно', id: 5 },
 ];
 </script>
 
 <style scoped lang="scss" module>
 .about {
-  z-index: 3;
+  z-index: 4;
   position: relative;
   @include layoutHorizontal;
 }
@@ -86,14 +85,33 @@ const data = [
 }
 
 .cardsWrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 13.3rem);
   flex-wrap: wrap;
-  gap: 4rem;
+  gap: 0.8rem;
   justify-content: center;
   margin-top: 62px;
+
+  @include bp($bp-medium) {
+    grid-template-columns: repeat(auto-fit, 18.9rem);
+    gap: 2.4rem;
+  }
+
+  @include bp($bp-medium-big) {
+    grid-template-columns: repeat(auto-fit, 22.3rem);
+    gap: 4rem;
+  }
+
+  @include bp($bp-super-big) {
+    grid-template-columns: repeat(auto-fit, 26.2rem);
+  }
 }
 
 .aboutCard:nth-child(even) {
   margin-top: 40px;
+}
+
+.aboutCard:nth-child(odd) {
+  margin-bottom: 40px;
 }
 </style>

@@ -119,6 +119,11 @@
   @include textSuperBigMedium
 }
 
+@mixin textSuperBigMediumXl() {
+  font-size: 56px;
+  line-height: 62px;
+}
+
 
 @mixin textSuperBigXL() {
   font-size: 64px;

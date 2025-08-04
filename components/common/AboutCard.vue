@@ -26,12 +26,14 @@ defineProps({
   display: flex;
   flex-direction: column;
   gap: 19px;
-  padding: 24px;
+  padding: 16px;
   background-color: $darkWhite;
   color: $darkOrange;
-  height: 21.4rem;
   border-radius: 2rem;
-  width: 26.2rem;
+
+  @include bp($bp-medium) {
+    padding: 24px;
+  }
 }
 
 .cardWrapperEven {
@@ -42,7 +44,20 @@ defineProps({
 .quantity {
   font-family: $headers;
   color: inherit;
-  @include textSuperBigXL;
+
+  @include textSuperBigSmall;
+
+  @include bp($bp-medium) {
+    @include textSuperBigMedium;
+  }
+
+  @include bp($bp-medium-big) {
+    @include textSuperBigMediumXl;
+  }
+
+  @include bp($bp-super-big) {
+    @include textSuperBigXL;
+  }
 }
 .line {
   border: 1px solid $darkOrange;
@@ -54,6 +69,18 @@ defineProps({
 
 .text {
   color: inherit;
-  @include textBig;
+  @include textMini;
+
+  @include bp($bp-medium) {
+    @include textMedium;
+  }
+
+  @include bp($bp-medium-big) {
+    @include textMediumBig;
+  }
+
+  @include bp($bp-super-big) {
+    @include textBig;
+  }
 }
 </style>
