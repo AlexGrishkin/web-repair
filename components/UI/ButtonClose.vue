@@ -39,8 +39,9 @@ defineProps({
 
 <style lang="scss" scoped>
 .button-close {
+  cursor: pointer;
   width: min-content;
-  border-radius: var(--border-radius-circle);
+  border-radius: 50%;
   transition-timing-function: var(--transition-timing-function);
   transition-duration: var(--transition-duration-hover);
   transition-property: background-color, stroke, color;

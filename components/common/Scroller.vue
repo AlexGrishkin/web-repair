@@ -96,24 +96,6 @@ onMounted(() => {
 .swiper {
   width: 100%;
   height: 100%;
-
-  padding-right: 15px;
-
-  @include bp($bp-small) {
-    padding-right: 20px;
-  }
-
-  @include bp($bp-medium) {
-    padding-right: 32px;
-  }
-
-  @include bp($bp-medium-big) {
-    padding-right: 50px;
-  }
-
-  @include bp($bp-big) {
-    padding-right: 0;
-  }
 }
 
 :global(.swiper-wrapper) {
@@ -130,9 +112,5 @@ onMounted(() => {
   background-color: transparent;
   cursor: pointer;
   place-items: center;
-
-  @include bp($bp-big) {
-    display: grid;
-  }
 }
 </style>

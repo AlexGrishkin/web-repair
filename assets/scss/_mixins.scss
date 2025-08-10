@@ -66,6 +66,7 @@ $bp-super-big: 1920px;
 
   @include bp($bp-medium-big) {
     padding-left: 50px;
+    padding-right: 50px;
   }
 
   @include bp($bp-big) {

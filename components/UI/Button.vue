@@ -20,12 +20,13 @@ const emit = defineEmits(['onClickButton']);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.6rem 6rem;
-  background-color: $darkRed;
+  padding: 1.2rem 4rem;
+  background-color: $darkOrange;
   color: $white;
-  border-radius: 0.5rem;
+  border-radius: $borderButtons;
   cursor: pointer;
+  width: 100%;
 
-  @include textMediumBigSemiBold;
+  @include textMiniSemiBold;
 }
 </style>

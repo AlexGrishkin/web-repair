@@ -14,12 +14,140 @@
       :additionally="dataAdditionally"
     />
     <MainReasons :reasons="reasons" />
+    <CustomersBenefit
+      :title="customersData.title"
+      :description="customersData.description"
+      :sub-title="customersData.subtitle"
+      :class="$style.section"
+    />
+    <Tarifs
+      :title="tarifsData.title"
+      :sub-title="tarifsData.subtitle"
+      :tarifs="tarifsData.tarifs"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import Banner from '~/components/Main/Banner.vue';
 import Direction from '~/components/Main/Direction.vue';
+import CustomersBenefit from '~/components/Main/CustomersBenefit.vue';
+import Tarifs from '~/components/Main/Tarifs.vue';
+
+const tarifsData = {
+  title: 'ТАРИФЫ',
+  subtitle:
+    'Всё просто: выбирайте из 5 тарифов. Материалы, работы и уборка уже включены. Никаких лишних трат.',
+  tarifs: [
+    {
+      id: 1,
+      title: 'Эконом',
+      price: 10900,
+      description: [
+        'Демонтаж и стяжка пола',
+        'Электрика и сантехника',
+        'Плитка в ванной',
+        'Покраска стен',
+      ],
+      image: '/tarifs/tarifImg.png',
+    },
+    {
+      id: 2,
+      title: 'Эконом',
+      price: 10900,
+      description: [
+        'Демонтаж и стяжка пола',
+        'Электрика и сантехника',
+        'Плитка в ванной',
+        'Покраска стен',
+      ],
+      image: '/tarifs/tarifImg.png',
+    },
+    {
+      id: 3,
+      title: 'Эконом',
+      price: 10900,
+      description: [
+        'Демонтаж и стяжка пола',
+        'Электрика и сантехника',
+        'Плитка в ванной',
+        'Покраска стен',
+      ],
+      image: '/tarifs/tarifImg.png',
+    },
+    {
+      id: 4,
+      title: 'Эконом',
+      price: 10900,
+      description: [
+        'Демонтаж и стяжка пола',
+        'Электрика и сантехника',
+        'Плитка в ванной',
+        'Покраска стен',
+      ],
+      image: '/tarifs/tarifImg.png',
+    },
+    {
+      id: 5,
+      title: 'Эконом',
+      price: 10900,
+      description: [
+        'Демонтаж и стяжка пола',
+        'Электрика и сантехника',
+        'Плитка в ванной',
+        'Покраска стен',
+      ],
+      image: '/tarifs/tarifImg.png',
+    },
+  ],
+};
+
+const customersData = {
+  title: 'КАЖДЫЙ НАШ',
+  subtitle: 'КЛИЕНТ ПОЛУЧАЕТ',
+  description: [
+    {
+      text: 'Все доставки и разгрузки материалов за наш счет',
+      image: '/customers/homeCustomer.svg',
+    },
+    {
+      text: 'Все доставки и разгрузки материалов за наш счет',
+      image: '/customers/homeCustomer.svg',
+    },
+    {
+      text: 'Бесплатную визуализацию',
+      image: '/customers/homeCustomer.svg',
+    },
+    {
+      text: 'Бесплатную визуализацию',
+      image: '/customers/homeCustomer.svg',
+    },
+    {
+      text: 'Все доставки и разгрузки материалов за наш счет',
+      image: '/customers/homeCustomer.svg',
+    },
+    {
+      text: 'Бесплатную визуализацию',
+      image: '/customers/homeCustomer.svg',
+    },
+    {
+      text: 'Бесплатную визуализацию',
+      image: '/customers/homeCustomer.svg',
+    },
+    {
+      text: 'Все доставки и разгрузки материалов за наш счет',
+      image: '/customers/homeCustomer.svg',
+    },
+    {
+      text: 'Бесплатную визуализацию',
+      image: '/customers/homeCustomer.svg',
+    },
+    {
+      text: 'Все доставки и разгрузки материалов за наш счет',
+      image: '/customers/homeCustomer.svg',
+    },
+  ],
+};
 
 const directionData = {
   title: 'НАШИ НАПРАВЛЕНИЯ',
