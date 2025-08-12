@@ -166,7 +166,8 @@ const items = [
 
 .faqHeader {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 4rem;
   justify-content: space-between;
   gap: 1.4rem;
   background: transparent;
@@ -178,6 +179,7 @@ const items = [
 
 .faqQuestion {
   color: $darkWhite;
+  text-align: start;
 
   @include textBig;
 }
