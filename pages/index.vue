@@ -25,6 +25,12 @@
       :sub-title="tarifsData.subtitle"
       :tarifs="tarifsData.tarifs"
     />
+    <RepairSteps
+      :title="repairStepsData.title"
+      :sub-title="repairStepsData.subtitle"
+      :description="repairStepsData.description"
+    />
+    <Questions title="Появились вопросы?" sub-title="попробуем ответить!" />
   </div>
 </template>
 
@@ -33,6 +39,8 @@ import Banner from '~/components/Main/Banner.vue';
 import Direction from '~/components/Main/Direction.vue';
 import CustomersBenefit from '~/components/Main/CustomersBenefit.vue';
 import Tarifs from '~/components/Main/Tarifs.vue';
+import RepairSteps from '~/components/Main/RepairSteps.vue';
+import Questions from '~/components/Main/Questions.vue';
 
 const tarifsData = {
   title: 'ТАРИФЫ',
@@ -205,6 +213,25 @@ const reasons = [
     text: 'Она фиксирована. Вы можете рассчитать её прямо сейчас на сайте. После заключения договора стоимость не меняется независимо от ситуации на рынке.',
   },
 ];
+
+const repairStepsData = {
+  title: 'ВАШ РЕМОНТ В',
+  subtitle: '3 ПРОСТЫХ ШАГА',
+  description: [
+    {
+      title: 'Заявка и расчёт стоимости',
+      description: 'Вы оставляете заявку на ремонт мы сразу же делаем расчёт',
+    },
+    {
+      title: 'Заявка и расчёт стоимости',
+      description: 'Вы оставляете заявку на ремонт мы сразу же делаем расчёт',
+    },
+    {
+      title: 'Заявка и расчёт стоимости',
+      description: 'Вы оставляете заявку на ремонт мы сразу же делаем расчёт',
+    },
+  ],
+};
 
 // const config = useRuntimeConfig();
 </script>
