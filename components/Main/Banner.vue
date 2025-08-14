@@ -1,5 +1,5 @@
 <template>
-  <div ref="bannerRef" :class="[$style.mainBanner, 'is-animatable']">
+  <div ref="bannerRef" :class="[$style.mainBanner, 'is-animatable']" data-animate>
     <nuxt-img src="/Banner.webp" :class="$style.mainBannerImg" alt="Фото церкви" />
     <div :class="$style.mainBannerText">
       <p :class="$style.mainText" data-animate>Ремонт «под ключ»</p>
