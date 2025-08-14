@@ -99,10 +99,10 @@ const props = defineProps({
   font-size: 20px;
   grid-column: 1 / span 1;
   align-self: center;
-  width: 5rem;
-  height: 5rem;
+  width: 7rem;
+  height: 7rem;
 
-  @include textBig;
+  @include textSuperBigSmall;
 
   @include bp($bp-small) {
     width: 9rem;

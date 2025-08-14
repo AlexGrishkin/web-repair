@@ -1,8 +1,8 @@
 <template>
-  <div :class="$style.reasons">
-    <h2 :class="$style.mainText">Почему мы ?</h2>
+  <div ref="reasonsRef" :class="$style.reasons">
+    <h2 :class="$style.mainText" data-animate>Почему мы ?</h2>
     <div :class="$style.reasonsItems">
-      <div v-for="(item, index) in reasons" :key="item.id" :class="$style.reasonsItem">
+      <div v-for="(item, index) in reasons" :key="item.id" :class="$style.reasonsItem" data-animate>
         <p :class="$style.reasonsItemCount">0{{ index + 1 }}</p>
         <div :class="$style.reasonsItemText">
           <p :class="$style.reasonsItemTextTitle">{{ item.title }}</p>
@@ -18,6 +18,43 @@ defineProps({
     type: Array,
     default: () => {},
   },
+});
+
+const reasonsRef = ref(null);
+
+onMounted(async () => {
+  // уважение к людям с reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const root = reasonsRef.value;
+  if (!root) return;
+
+  // стартово спрячем, чтобы не мигало до инициализации
+  root.classList.add('is-animatable');
+
+  // безопасный динамический импорт на клиенте
+  const gsapMod = await import('gsap');
+  const ScrollTrigger = (await import('gsap/ScrollTrigger')).default;
+  const gsap = gsapMod.default || gsapMod;
+  gsap.registerPlugin(ScrollTrigger);
+
+  const items = root.querySelectorAll('[data-animate]');
+  if (!items.length) return;
+
+  gsap.from(items, {
+    y: 24,
+    opacity: 0,
+    duration: 0.7,
+    ease: 'power2.out',
+    stagger: 0.2, // по очереди
+    delay: 0.3, // общая задержка перед стартом
+    clearProps: 'all', // очистить inline-стили после анимации
+    scrollTrigger: {
+      trigger: root,
+      start: 'top 70%', // когда верх баннера дойдёт до 70% окна
+      toggleActions: 'play none none none',
+      once: true, // анимируем один раз
+    },
+  });
 });
 </script>
 

@@ -1,8 +1,8 @@
 <template>
-  <div :class="$style.about">
+  <div id="about" ref="aboutRef" :class="[$style.about]">
     <div>
-      <h2 :class="$style.mainText">{{ title }}</h2>
-      <p :class="$style.description">{{ description }}</p>
+      <h2 :class="$style.mainText" data-animate>{{ title }}</h2>
+      <p :class="$style.description" data-animate>{{ description }}</p>
     </div>
     <div :class="$style.cardsWrapper">
       <AboutCard
@@ -12,6 +12,7 @@
         :quantity="card.quantity"
         :text="card.text"
         :class="$style.aboutCard"
+        data-animate
       />
     </div>
   </div>
@@ -30,12 +31,49 @@ defineProps({
   },
 });
 
+const aboutRef = ref(null);
+
 const data = [
   { quantity: 900, text: 'проектов в работе одновременно', id: 1 },
   { quantity: 900, text: 'проектов в работе одновременно', id: 2 },
   { quantity: 900, text: 'проектов в работе одновременно', id: 3 },
   { quantity: 900, text: 'проектов в работе одновременно', id: 4 },
 ];
+
+onMounted(async () => {
+  // уважение к людям с reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const root = aboutRef.value;
+  if (!root) return;
+
+  // стартово спрячем, чтобы не мигало до инициализации
+  root.classList.add('is-animatable');
+
+  // безопасный динамический импорт на клиенте
+  const gsapMod = await import('gsap');
+  const ScrollTrigger = (await import('gsap/ScrollTrigger')).default;
+  const gsap = gsapMod.default || gsapMod;
+  gsap.registerPlugin(ScrollTrigger);
+
+  const items = root.querySelectorAll('[data-animate]');
+  if (!items.length) return;
+
+  gsap.from(items, {
+    y: 24,
+    opacity: 0,
+    duration: 0.7,
+    ease: 'power2.out',
+    stagger: 0.2, // по очереди
+    delay: 0.3, // общая задержка перед стартом
+    clearProps: 'all', // очистить inline-стили после анимации
+    scrollTrigger: {
+      trigger: root,
+      start: 'top 70%', // когда верх баннера дойдёт до 70% окна
+      toggleActions: 'play none none none',
+      once: true, // анимируем один раз
+    },
+  });
+});
 </script>
 
 <style scoped lang="scss" module>

@@ -1,8 +1,8 @@
 <template>
-  <div :class="$style.tarifs">
+  <div id="tarifs" ref="tarifsRef" :class="$style.tarifs">
     <div :class="$style.titleWrapper">
-      <h2 :class="$style.mainText">{{ title }}</h2>
-      <p :class="$style.mainTextSubtitle">{{ subTitle }}</p>
+      <h2 :class="$style.mainText" data-animate>{{ title }}</h2>
+      <p :class="$style.mainTextSubtitle" data-animate>{{ subTitle }}</p>
     </div>
     <Scroller
       name="news"
@@ -15,10 +15,20 @@
     >
       <template v-if="tarifs?.length">
         <swiper-slide v-for="tarif in tarifs" :key="tarif.id">
-          <TarifsCard :tarif-data="tarif" />
+          <TarifsCard :tarif-data="tarif" data-animate @details="openModal" />
         </swiper-slide>
       </template>
     </Scroller>
+    <ModalTariff
+      v-if="selectedTarif"
+      v-model="isModalOpen"
+      :title="selectedTarif.title"
+      :price="`${selectedTarif.price.toLocaleString()} ₽/м`"
+      :subtitle="selectedTarif.subtitle"
+      :items="selectedTarif.detailDescription"
+      :image="selectedTarif.image"
+      :note="selectedTarif.note"
+    />
   </div>
 </template>
 
@@ -26,6 +36,7 @@
 import Scroller from '~/components/common/Scroller.vue';
 import { SwiperSlide } from 'swiper/vue';
 import TarifsCard from '~/components/common/TarifsCard.vue';
+import ModalTariff from '~/components/common/ModalTariff.vue';
 
 const props = defineProps({
   title: {
@@ -72,6 +83,51 @@ const swiperOptions = {
     },
   },
 };
+
+const isModalOpen = ref(false);
+const selectedTarif = ref(null);
+
+function openModal(tarif) {
+  selectedTarif.value = tarif;
+  isModalOpen.value = true;
+}
+
+const tarifsRef = ref(null);
+
+onMounted(async () => {
+  // уважение к людям с reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const root = tarifsRef.value;
+  if (!root) return;
+
+  // стартово спрячем, чтобы не мигало до инициализации
+  root.classList.add('is-animatable');
+
+  // безопасный динамический импорт на клиенте
+  const gsapMod = await import('gsap');
+  const ScrollTrigger = (await import('gsap/ScrollTrigger')).default;
+  const gsap = gsapMod.default || gsapMod;
+  gsap.registerPlugin(ScrollTrigger);
+
+  const items = root.querySelectorAll('[data-animate]');
+  if (!items.length) return;
+
+  gsap.from(items, {
+    y: 24,
+    opacity: 0,
+    duration: 0.7,
+    ease: 'power2.out',
+    stagger: 0.2, // по очереди
+    delay: 0.3, // общая задержка перед стартом
+    clearProps: 'all', // очистить inline-стили после анимации
+    scrollTrigger: {
+      trigger: root,
+      start: 'top 70%', // когда верх баннера дойдёт до 70% окна
+      toggleActions: 'play none none none',
+      once: true, // анимируем один раз
+    },
+  });
+});
 </script>
 
 <style scoped lang="scss" module>

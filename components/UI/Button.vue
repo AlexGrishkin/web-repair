@@ -26,7 +26,12 @@ const emit = defineEmits(['onClickButton']);
   border-radius: $borderButtons;
   cursor: pointer;
   width: 100%;
+  transition: $transitionBgColor, $transitionBorder;
 
   @include textMiniSemiBold;
+
+  &:hover {
+    background-color: $mainBlack;
+  }
 }
 </style>

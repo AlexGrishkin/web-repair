@@ -1,11 +1,11 @@
 <template>
-  <div :class="$style.benefit">
+  <div ref="customerRef" :class="$style.benefit">
     <div>
-      <h2 :class="$style.mainText">{{ title }}</h2>
-      <p :class="$style.mainTextSubtitle">{{ subTitle }}</p>
+      <h2 :class="$style.mainText" data-animate>{{ title }}</h2>
+      <p :class="$style.mainTextSubtitle" data-animate>{{ subTitle }}</p>
     </div>
     <div :class="$style.benefitItems">
-      <div v-for="item in description" :key="item.id" :class="$style.benefitItem">
+      <div v-for="item in description" :key="item.id" :class="$style.benefitItem" data-animate>
         <img :src="item.image" :class="$style.image" />
         <p :class="$style.description">{{ item.text }}</p>
       </div>
@@ -27,6 +27,43 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+});
+
+const customerRef = ref(null);
+
+onMounted(async () => {
+  // уважение к людям с reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const root = customerRef.value;
+  if (!root) return;
+
+  // стартово спрячем, чтобы не мигало до инициализации
+  root.classList.add('is-animatable');
+
+  // безопасный динамический импорт на клиенте
+  const gsapMod = await import('gsap');
+  const ScrollTrigger = (await import('gsap/ScrollTrigger')).default;
+  const gsap = gsapMod.default || gsapMod;
+  gsap.registerPlugin(ScrollTrigger);
+
+  const items = root.querySelectorAll('[data-animate]');
+  if (!items.length) return;
+
+  gsap.from(items, {
+    y: 24,
+    opacity: 0,
+    duration: 0.7,
+    ease: 'power2.out',
+    stagger: 0.2, // по очереди
+    delay: 0.3, // общая задержка перед стартом
+    clearProps: 'all', // очистить inline-стили после анимации
+    scrollTrigger: {
+      trigger: root,
+      start: 'top 70%', // когда верх баннера дойдёт до 70% окна
+      toggleActions: 'play none none none',
+      once: true, // анимируем один раз
+    },
+  });
 });
 </script>
 
@@ -54,6 +91,7 @@ const props = defineProps({
     gap: 1.2rem;
 
     @include bp($bp-small) {
+      grid-template-columns: repeat(auto-fill, 37rem);
       gap: 2.4rem;
     }
 

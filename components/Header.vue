@@ -10,9 +10,9 @@
         v-for="link in NAVIGATION_CONFIG"
         :key="link.id"
         :class="$style.navigationLink"
-        :to="link.to"
-        href="#"
+        :to="link?.to"
         data-allow-mismatch
+        @click="scrollToSection(link.hash)"
       >
         {{ link.title }}
       </component>
@@ -33,15 +33,22 @@
     <div v-show="true" :class="[$style.mobileMenu, isMobileMenuOpen ? $style.open : $style.closed]">
       <ButtonClose :class="$style.buttonClose" @click="handleClose" />
       <img v-if="data.logo" :class="$style.mobileLogoImg" src="/BigLogo.png" alt="Логотип" />
-      <nuxt-link
+      <component
+        :is="isLink(link)"
         v-for="link in NAVIGATION_CONFIG"
         :key="link.id"
         :class="$style.mobileLink"
-        :to="link.to"
-        @click="isMobileMenuOpen = false"
+        :to="link?.to"
+        data-allow-mismatch
+        @click.prevent="
+          () => {
+            scrollToSection(link.hash);
+            isMobileMenuOpen = false;
+          }
+        "
       >
         {{ link.title }}
-      </nuxt-link>
+      </component>
     </div>
   </div>
 </template>
@@ -54,25 +61,17 @@ const data = {
 };
 
 const NAVIGATION_CONFIG = [
-  {
-    title: 'Тарифы',
-    id: '1',
-  },
-  {
-    title: 'Портфолио',
-    id: '2',
-  },
-  {
-    title: 'Контакты',
-    id: '3',
-  },
+  { title: 'Тарифы', id: '1', hash: '#tarifs' },
+  { title: 'О нас', id: '2', hash: '#about' },
+  { title: 'Этапы ремонта', id: '3', hash: '#steps' },
+  { title: 'Вопросы', id: '4', hash: '#questions' },
 ];
 
 const isLink = (nav) => {
   if (nav?.to) {
     return defineNuxtLink({});
   } else {
-    return 'a';
+    return 'button';
   }
 };
 
@@ -84,6 +83,14 @@ const handleClose = () => {
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
+};
+
+const scrollToSection = (hash: string) => {
+  const el = document.querySelector(hash) as HTMLElement | null;
+  if (!el) return;
+
+  const top = el.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top, behavior: 'smooth' });
 };
 </script>
 
@@ -126,9 +133,9 @@ const toggleMobileMenu = () => {
 
   .navigationLink {
     color: $darkWhite;
-    width: min-content;
     text-wrap: balance;
     transition: $transitionColor;
+    cursor: pointer;
     @include textMediumBigSemiBold;
 
     @include bp($bp-medium-big) {
@@ -212,6 +219,8 @@ const toggleMobileMenu = () => {
   }
 
   .mobileLink {
+    text-align: start;
+    cursor: pointer;
     color: $darkWhite;
     @include textMediumBigSemiBold;
 

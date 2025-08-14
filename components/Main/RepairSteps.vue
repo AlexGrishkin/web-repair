@@ -1,8 +1,8 @@
 <template>
-  <div :class="$style.repairSteps">
+  <div id="steps" ref="stepsRef" :class="$style.repairSteps">
     <div :class="$style.titleWrapper">
-      <h2 :class="$style.mainText">{{ title }}</h2>
-      <p :class="$style.mainTextSubtitle">{{ subTitle }}</p>
+      <h2 :class="$style.mainText" data-animate>{{ title }}</h2>
+      <p :class="$style.mainTextSubtitle" data-animate>{{ subTitle }}</p>
     </div>
     <div :class="$style.stepsWrapper">
       <Step
@@ -12,6 +12,7 @@
         :description="item.description"
         :count="index + 1"
         :class="$style.stepsItem"
+        data-animate
       />
     </div>
   </div>
@@ -32,6 +33,43 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+});
+
+const stepsRef = ref(null);
+
+onMounted(async () => {
+  // уважение к людям с reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const root = stepsRef.value;
+  if (!root) return;
+
+  // стартово спрячем, чтобы не мигало до инициализации
+  root.classList.add('is-animatable');
+
+  // безопасный динамический импорт на клиенте
+  const gsapMod = await import('gsap');
+  const ScrollTrigger = (await import('gsap/ScrollTrigger')).default;
+  const gsap = gsapMod.default || gsapMod;
+  gsap.registerPlugin(ScrollTrigger);
+
+  const items = root.querySelectorAll('[data-animate]');
+  if (!items.length) return;
+
+  gsap.from(items, {
+    y: 24,
+    opacity: 0,
+    duration: 0.7,
+    ease: 'power2.out',
+    stagger: 0.2, // по очереди
+    delay: 0.3, // общая задержка перед стартом
+    clearProps: 'all', // очистить inline-стили после анимации
+    scrollTrigger: {
+      trigger: root,
+      start: 'top 70%', // когда верх баннера дойдёт до 70% окна
+      toggleActions: 'play none none none',
+      once: true, // анимируем один раз
+    },
+  });
 });
 </script>
 
@@ -116,7 +154,7 @@ const props = defineProps({
   color: $mainBlack;
   background-color: $mainBlack;
   bottom: -8rem;
-  left: 2.5rem;
+  left: 3.5rem;
   content: '';
   width: 0.3rem;
   height: 12rem;

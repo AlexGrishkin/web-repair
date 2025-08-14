@@ -60,13 +60,16 @@ defineProps({
 
   &_theme_white {
     @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background-color: $mainBlack;
+      }
       &:hover .button-close__icon-path {
-        stroke: white;
+        stroke: $darkWhite;
       }
     }
 
     .button-close__icon-path {
-      stroke: $darkWhite;
+      stroke: $mainBlack;
     }
   }
 

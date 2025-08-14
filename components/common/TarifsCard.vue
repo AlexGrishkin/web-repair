@@ -19,7 +19,11 @@
           </p>
         </div>
       </div>
-      <Button button-text="Подробнее" :class="$style.cardButton" />
+      <Button
+        button-text="Подробнее"
+        :class="$style.cardButton"
+        @click="$emit('details', tarifData)"
+      />
     </div>
   </div>
 </template>
@@ -36,6 +40,8 @@ defineProps({
     default: false,
   },
 });
+
+defineEmits(['details']);
 </script>
 
 <style scoped module lang="scss">
