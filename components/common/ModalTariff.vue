@@ -87,8 +87,8 @@ onUnmounted(() => {
 .card {
   display: grid;
   position: relative;
-  height: 70vh;
-  max-height: 70rem;
+  height: 75vh;
+  max-height: 75rem;
   overflow: auto;
   width: 100%;
   max-width: 737px;
